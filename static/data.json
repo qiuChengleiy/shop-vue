@@ -1,0 +1,28 @@
+{
+    "home":{
+        "lunbo":{
+            "home":[ 
+                    "https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg",
+                    "https://img.yzcdn.cn/public_files/2017/09/05/c0dab461920687911536621b345a0bc9.jpg",
+                    "https://img.yzcdn.cn/public_files/2017/09/05/4e3ea0898b1c2c416eec8c11c5360833.jpg",
+                    "https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg",
+                    "https://img.yzcdn.cn/public_files/2017/09/05/c0dab461920687911536621b345a0bc9.jpg",
+                    "https://img.yzcdn.cn/public_files/2017/09/05/4e3ea0898b1c2c416eec8c11c5360833.jpg"
+                ]
+        },
+        "imageList":[
+            "https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg",
+            "https://img.yzcdn.cn/public_files/2017/09/05/c0dab461920687911536621b345a0bc9.jpg",
+            "https://img.yzcdn.cn/public_files/2017/09/05/4e3ea0898b1c2c416eec8c11c5360833.jpg",
+            "https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg",
+            "https://img.yzcdn.cn/public_files/2017/09/05/c0dab461920687911536621b345a0bc9.jpg",
+            "https://img.yzcdn.cn/public_files/2017/09/05/4e3ea0898b1c2c416eec8c11c5360833.jpg"
+        ],
+        "broadcast":["forge商城移动端app1.0版本正式发布 欢迎来体验 ^_^ pc端响应式站点即将将上线~~~ 欢迎来戳 作者QQ:1421546334 Email:qcl9701s666@163.com Github:https://github.com/qiuChengleiy"],
+        "active":{
+            "title":["百丽VIP大牌日","2折起 MOISELLE女装 明星优雅之选","2折起 耐克Nike运动休闲男女专场","1.5折起 新装入夏-七匹狼男装专场","6.1折起 法国贝德玛洁颜护肤专场","6.1折起 春夏爆款，等你来挑"],
+            "days":["2","2","3","1","2","1"]
+        }
+    }
+    
+}
