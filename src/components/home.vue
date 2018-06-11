@@ -31,7 +31,7 @@
           class="tab"
           >
             <!-- 今日推荐版块 -->
-            <div v-if="title[index]== '今日推荐'">
+            <div v-if="title[index]== '今日推荐'" class="contain">
                <!-- 轮播 -->
                 <swiper class="swiper" :tabs="title[index]" />
                   <van-row class="col-2">
@@ -73,6 +73,36 @@
               </van-row>
            </lazy-component>
      
+            </div>
+
+            <!-- 时尚版块 -->
+            <div v-if="title[index]== '时尚'" class="contain">
+              <h1>时尚</h1>
+            </div>
+
+            <!-- 时尚版块 -->
+            <div v-if="title[index]== '美装'" class="contain">
+              <h1>美装</h1>
+            </div>
+
+            <!-- 时尚版块 -->
+            <div v-if="title[index]== '家电'" class="contain">
+              <h1>家电</h1>
+            </div>
+
+            <!-- 时尚版块 -->
+            <div v-if="title[index]== '家居'" class="contain">
+              <h1>家居</h1>
+            </div>
+
+            <!-- 时尚版块 -->
+            <div v-if="title[index]== '国际'" class="contain">
+              <h1>国际</h1>
+            </div>
+
+            <!-- 时尚版块 -->
+            <div v-if="title[index]== '生活'" class="contain">
+              <h1>生活</h1>
             </div>
             
 
@@ -193,12 +223,12 @@ export default {
 
   },
   created() {
-console.log(this.bc_notshow)
+      console.log(this.bc_notshow)
   }
 }
 </script>
 
-<style <style lang="less" scoped>
+<style lang="less" scoped>
 @import url('../assets/css/home.less');
 </style>
 
