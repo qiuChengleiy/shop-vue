@@ -7,7 +7,9 @@ yarn-error.log*
 /test/unit/coverage/
 /test/e2e/reports/
 selenium-debug.log
+package-lock.json
 forge商城项目前后台接口设计文案.rtf
+
 
 
 # Editor directories and files

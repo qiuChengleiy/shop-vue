@@ -2,7 +2,7 @@
 export default {
     state:{
         tab:{
-            title:['','今日推荐','时尚','美装','家电','家居','国际','生活'],
+            title:['','今日推荐','时尚','美妆','家电','家居','国际','生活'],
         },
         badge:{
             icon:['icon_1','icon_2','icon_8','icon_4','icon_5','icon_6','icon_7','icon_10'],
@@ -14,14 +14,21 @@ export default {
         imageList:[],
         broadcast:[],
         bc:true,
+        show:true,
+        sshow:false,
         shop_info:"5",
         my_info:"2",
     },
     mutations: {
-        
+        search_(state) {
+            state.show = false;
+        }
     },
     actions: {
-       
+       searchA(context,e) {
+           context.commit('search_');
+          
+       }
     },
     getters: {
         bc_notshow(state){
@@ -29,7 +36,7 @@ export default {
               state.bc = false;
             }, 20000);
             return state.bc;
-        }
+        },
        
     }
 }

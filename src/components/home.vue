@@ -12,7 +12,7 @@
             v-model="value"
             style="background:white;height:35px;border-radius:22px;"
             placeholder="大家在搜索：衣服"
-            @keydown.enter.prevent="search"
+            @click.stop="search"
           />
         </form>
       </van-col>
@@ -50,64 +50,46 @@
                       {{broadcast[0]}}
                     </van-notice-bar>
                  </van-col>
-                    <!--活动 标题 -->
-                    <van-col span='24'>
-                        <h4>{{actives[0]}}</h4>  
-                     </van-col>
-                  </van-row>
-                <!-- 懒加载  瀑布流-->
-            <lazy-component class="lazys"
-            v-waterfall-lower="loadMore"
-            waterfall-disabled="disabled"
-            waterfall-offset="300"
-            >
-              <van-row v-for="(img,index) in imageList" :key='img.id' >
-                <img  v-lazy="img" name="adapter" />
-                <van-col span="16" offset="2" class="lazy-left">
-                  <h4>{{activeTitle[index]}}</h4>
-                </van-col>
-                <van-col span="6" class="lazy-right">
-                  <span>{{'剩余'+days[index]+'天'}}</span>
-                </van-col>
-               
-              </van-row>
-           </lazy-component>
-     
+             </van-row>
+              <!-- 活动版块 -->
+                <active :tabs="title[index]" />
             </div>
 
             <!-- 时尚版块 -->
             <div v-if="title[index]== '时尚'" class="contain">
-              <h1>时尚</h1>
+              <active :tabs="title[index]" />
             </div>
 
-            <!-- 时尚版块 -->
-            <div v-if="title[index]== '美装'" class="contain">
-              <h1>美装</h1>
+            <!-- 美妆版块 -->
+            <div v-if="title[index]== '美妆'" class="contain">
+              <swiper class="swiper" :tabs="title[index]" />
+              <active :tabs="title[index]" />
             </div>
 
-            <!-- 时尚版块 -->
+            <!-- 家电版块 -->
             <div v-if="title[index]== '家电'" class="contain">
-              <h1>家电</h1>
+              <swiper class="swiper" :tabs="title[index]" />
+              <active :tabs="title[index]" />
             </div>
 
-            <!-- 时尚版块 -->
+            <!-- 家居版块 -->
             <div v-if="title[index]== '家居'" class="contain">
-              <h1>家居</h1>
+              <swiper class="swiper" :tabs="title[index]" />
+              <active :tabs="title[index]" />
             </div>
 
-            <!-- 时尚版块 -->
+            <!-- 国际版块 -->
             <div v-if="title[index]== '国际'" class="contain">
-              <h1>国际</h1>
+              <swiper class="swiper" :tabs="title[index]" />
+              <active :tabs="title[index]" />
             </div>
 
-            <!-- 时尚版块 -->
+            <!-- 生活版块 -->
             <div v-if="title[index]== '生活'" class="contain">
-              <h1>生活</h1>
+              <swiper class="swiper" :tabs="title[index]" />
+              <active :tabs="title[index]" />
             </div>
-            
-
-
-
+          
 
           </van-tab>
         </van-tabs>
@@ -121,19 +103,21 @@
         <van-tabbar-item icon="shopping-cart" info="5" v-infos="shop_info">购物车</van-tabbar-item>
         <van-tabbar-item icon="contact" info="2" v-infos="my_info">我的forge</van-tabbar-item>
       </van-tabbar>
+    </div>
 
-  </div>
 </template>
 
 <script>
 import { mapState,mapActions,mapGetters } from 'vuex';
 import { Waterfall } from 'vant';
 import Swiper from './swiper';
+import Active from './active';
 
 export default {
   name: 'home',
   components:{
-    Swiper
+    Swiper,
+    Active,
   },
   data() {
     return {
@@ -146,6 +130,7 @@ export default {
         days:null,
         disabled:false,
         broadcast:null,
+        show:true,
     }
   },
   computed: {
@@ -160,13 +145,17 @@ export default {
       broadcast: state => state.home.broadcast,
       shop_info: state => state.home.shop_info,
       my_info: state => state.home.my_info,
+      show: state => state.home.show,
     }),
-    ...mapGetters(['bc_notshow']),
+    ...mapGetters(['bc_notshow','search_show']),
   },
   methods: {
-     search() {
-       console.log(this.value)
-     },
+    ...mapActions([
+      'searchA'
+    ]),
+    search() {
+      this.$router.push('/search');
+    },
      // 瀑布流方法
      loadMore() {
       this.disabled = true;
@@ -207,9 +196,6 @@ export default {
      this.axios.get('./static/data.json').then((res)=>{
           if( res.status == 200 ) {
                 const data = res.data.home;
-                this.activeTitle = data.active.title.slice(0,3);
-                this.days = data.active.days.slice(0,3);
-                this.imageList = data.imageList.slice(0,3);
                 this.broadcast = data.broadcast;
               //  console.log(res.data.home.active,this.days,this.activeTitle)
            } else {
@@ -223,7 +209,8 @@ export default {
 
   },
   created() {
-      console.log(this.bc_notshow)
+    
+     console.log( this.search_show)
   }
 }
 </script>
