@@ -14,7 +14,7 @@
                  <div class="over">
                     <van-row  v-for="(img,index) in imageList.img_1" :key='img.id' class="lists">
                         <van-col span='11' offset="1" class="goods_list">
-                            <div class="imgList">
+                            <div class="imgList" @click.stop="buy(img)">
                                <img  v-lazy="img" name="adapter" />
                             </div>
                             <van-col span="24" class="lazy-left">
@@ -26,9 +26,9 @@
                             </van-col>
 
                         </van-col>
-
+    
                         <van-col span='11' offset="1" class="goods_list">
-                            <div class="imgList">
+                            <div class="imgList" @click.stop="buy(imageList.img_2[index])">
                                <img  v-lazy="imageList.img_2[index]" name="adapter" />
                             </div>
                             <van-col span="24" class="lazy-left">
@@ -43,7 +43,6 @@
                 
                     </van-row>
                   </div>
-
 
                 </van-pull-refresh>
             <!-- tabBar -->
@@ -62,7 +61,7 @@ import { mapState,mapActions,mapGetters } from 'vuex';
 import { Waterfall } from 'vant';
 
 export default {
-  name: 'active',
+  name: 'goodsInfo',
   data() {
     return {
       tabarActive:0,
@@ -97,15 +96,7 @@ export default {
     }
   },
   props:{
-    tabs:{
-      type:String,
-      required:true,
-      default(){
-        return {
-            tabs:'errTitle'
-        }
-      }
-    }
+    
   },
   computed: {
     ...mapState({
@@ -129,6 +120,11 @@ export default {
      search_shows(){
          this.$router.push('/');
      },
+     buy(img) {
+       this.buyParam(img);
+       this.$router.push('/goods/id_0/buy');
+     },
+     ...mapActions(['buyParam']),
      onRefresh() {
       setTimeout(() => {
         this.$toast('刷新成功');
@@ -318,6 +314,7 @@ export default {
   created() {
      
      console.log(this.$route.params.id)
+     this.buyParam('buy');
   }
 }
 </script>

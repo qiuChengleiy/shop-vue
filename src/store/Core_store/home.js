@@ -18,17 +18,45 @@ export default {
         sshow:false,
         shop_info:"5",
         my_info:"2",
+        buyInfo:{
+            img:[],
+        },
+        orderShow:false,
+        numO:null,
     },
     mutations: {
         search_(state) {
             state.show = false;
+        },
+        buySearch(state,img) {
+            state.buyInfo.img[0] = img;
+            console.log(state.buyInfo.img);
+        },
+        orderShow_(state) {
+            state.orderShow ? state.orderShow = false : state.orderShow = true;
+            setTimeout(() => {
+                state.orderShow = false;
+              }, 22000);
+        },
+        addNum(state,e) {
+            state.numO = e;
+            console.log(e);
         }
     },
     actions: {
        searchA(context,e) {
            context.commit('search_');
           
-       }
+       },
+       buyParam(context,img) {
+           context.commit('buySearch',img);
+       },
+       orderShows(context) {
+           context.commit('orderShow_');
+       },
+       orderNum(context,e) {
+         context.commit('addNum',e);
+       },
     },
     getters: {
         bc_notshow(state){
