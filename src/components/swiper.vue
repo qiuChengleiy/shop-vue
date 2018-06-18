@@ -5,7 +5,7 @@
       <van-col span="24">
         <van-swipe :autoplay="3000">
             <van-swipe-item v-for="(image, index) in images" :key="index">
-                <img v-lazy="image" style="width:100%;height:160px;"/>
+                <img v-lazy="image" style="width:100%;height:160px;" @click.stop="redirect('/goods/id_0')"/>
             </van-swipe-item>
         </van-swipe>
       </van-col>
@@ -43,7 +43,10 @@ export default {
     }),
   },
   methods: {
-   
+      redirect(url){
+          console.log(url);
+           this.$router.push(url);
+      }
   },
   watch: {
 

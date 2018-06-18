@@ -30,6 +30,8 @@
           :key="index.id" 
           class="tab"
           >
+          <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+
             <!-- 今日推荐版块 -->
             <div v-if="title[index]== '今日推荐'" class="contain">
                <!-- 轮播 -->
@@ -90,7 +92,7 @@
               <active :tabs="title[index]" />
             </div>
           
-
+             </van-pull-refresh>   
           </van-tab>
         </van-tabs>
       </van-col>
@@ -101,7 +103,7 @@
         <van-tabbar-item  icon="wap-home">首页</van-tabbar-item>
         <van-tabbar-item icon="pending-evaluate" dot>社区</van-tabbar-item>
         <van-tabbar-item icon="shopping-cart" info="5" v-infos="shop_info">购物车</van-tabbar-item>
-        <van-tabbar-item icon="contact" info="2" v-infos="my_info">我的forge</van-tabbar-item>
+        <van-tabbar-item icon="contact" info="2" v-infos="my_info">我的</van-tabbar-item>
       </van-tabbar>
     </div>
 
@@ -131,6 +133,8 @@ export default {
         disabled:false,
         broadcast:null,
         show:true,
+         count: 0,
+        isLoading: false
     }
   },
   computed: {
@@ -155,6 +159,13 @@ export default {
     ]),
     search() {
       this.$router.push('/search');
+    },
+    onRefresh() {
+      setTimeout(() => {
+        this.$toast('刷新成功');
+        this.isLoading = false;
+        this.count++;
+      }, 500);
     },
      // 瀑布流方法
      loadMore() {
