@@ -1,5 +1,5 @@
 <template>
-   <!-- 首页组件 -->
+   <!-- 社区组件 -->
   <div id="app">
      <!-- 搜索区 -->
      <van-row gutter="20" class="row-1">
@@ -26,24 +26,17 @@
     <van-row>
       <van-col span="24">
         <van-tabs v-model="active" swipeable v-tab>
-          <van-tab v-for="index in 7" 
+          <van-tab v-for="index in 3" 
           :title="title[index]" 
           :key="index.id" 
           class="tab"
           >
           <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
 
-            <!-- 今日推荐版块 -->
-            <div v-if="title[index]== '今日推荐'" class="contain">
-               <!-- 轮播 -->
-                <swiper class="swiper" :tabs="title[index]" />
+            <!-- 动态版块 -->
+            <div v-if="title[index]== '动态'" class="contain">
+        
                   <van-row class="col-2">
-                    <van-col class="row-2" span="6" v-for="(v,index) in icon" :key='v.id'>
-                      <a href="#">
-                        <img :src="path+'icon/'+icon[index]+'.png'" @click="tip()"/>
-                        <span>{{bageTitle[index]}}</span>
-                      </a>
-                    </van-col>
                     <!-- 通知 -->
                  <van-col span="24" style="margin-top:20px;" v-show="bc_notshow">
                     <van-notice-bar
@@ -55,43 +48,19 @@
                  </van-col>
              </van-row>
               <!-- 活动版块 -->
-                <active :tabs="title[index]" />
+                <news :tabs="title[index]" />
             </div>
 
             <!-- 时尚版块 -->
-            <div v-if="title[index]== '时尚'" class="contain">
-              <active :tabs="title[index]" />
+            <div v-if="title[index]== '热门'" class="contain">
+              <news :tabs="title[index]" />
             </div>
 
             <!-- 美妆版块 -->
-            <div v-if="title[index]== '美妆'" class="contain">
-              <swiper class="swiper" :tabs="title[index]" />
-              <active :tabs="title[index]" />
+            <div v-if="title[index]== '发现'" class="contain">
+              <news :tabs="title[index]" />
             </div>
 
-            <!-- 家电版块 -->
-            <div v-if="title[index]== '家电'" class="contain">
-              <swiper class="swiper" :tabs="title[index]" />
-              <active :tabs="title[index]" />
-            </div>
-
-            <!-- 家居版块 -->
-            <div v-if="title[index]== '家居'" class="contain">
-              <swiper class="swiper" :tabs="title[index]" />
-              <active :tabs="title[index]" />
-            </div>
-
-            <!-- 国际版块 -->
-            <div v-if="title[index]== '国际'" class="contain">
-              <swiper class="swiper" :tabs="title[index]" />
-              <active :tabs="title[index]" />
-            </div>
-
-            <!-- 生活版块 -->
-            <div v-if="title[index]== '生活'" class="contain">
-              <swiper class="swiper" :tabs="title[index]" />
-              <active :tabs="title[index]" />
-            </div>
           
              </van-pull-refresh>   
           </van-tab>
@@ -113,19 +82,16 @@
 <script>
 import { mapState,mapActions,mapGetters } from 'vuex';
 import { Waterfall } from 'vant';
-import Swiper from './swiper';
-import Active from './active';
-import { Toast } from 'vant';
+import News from './news';
 
 export default {
-  name: 'home',
+  name: 'community',
   components:{
-    Swiper,
-    Active,
+    News,
   },
   data() {
     return {
-        tabarActive:0,
+        tabarActive:1,
         value:null,
         active:0,
         path:'../../static/images/',
@@ -141,7 +107,7 @@ export default {
   },
   computed: {
     ...mapState({
-      title: state => state.home.tab.title,
+      title: state => state.community.tab.title,
       icon: state => state.home.badge.icon,
       bageTitle: state => state.home.badge.title,
       actives: state => state.active.home.title,
@@ -184,11 +150,8 @@ export default {
     indexPage() {
       this.$router.push('/');
     },
-     commPage(){
+    commPage(){
       this.$router.push('/community');
-    },
-    tip() {
-      Toast('网络错误o(╥﹏╥)o 请稍后再试~');
     }
   },
   watch: {
@@ -231,7 +194,6 @@ export default {
 
   },
   created() {
-     Toast('加载完毕 ^_^')
      console.log( this.search_show)
   }
 }

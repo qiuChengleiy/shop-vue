@@ -2,7 +2,7 @@
  <!-- 购买信息组件  大部分都是一样的 所以数据方面 我就用同一个 作为展示作用-->
   <div id="app">
        <van-row class="col-2">
-              <div class="preImg" @click.stop="ImagePreviews()">
+              <div class="preImg" @click="ImagePreviews()">
                  <img  v-lazy="buyImg" name="adapter" @click="ImagePreviews()"/>
               </div>  
                     <!--导航 -->
@@ -10,11 +10,22 @@
          <div class="back">
             <a href="javaScript:;" @click.prevent="search_shows">{{'<'}}</a>
          </div>
-              <span>{{actives[2]}}</span>
+          <span>{{actives[2]}}</span>
      </van-col>
 
        </van-row>
 
+    <van-row class="col-3">
+        <van-col span="24" class="lazy-bottom">
+             <h4>￥509 <span>￥899</span> <div>5.7折</div></h4> 
+         </van-col>
+
+     <van-col span="24" class="lazy-left">
+           <span>耐克Nike AIR ZOOM PEGASUS 34 男款跑鞋</span>
+     </van-col>
+     <hr/>
+     <van-col class="empty"></van-col>
+    </van-row>
 
     <!-- 优惠券单元格 -->
     <van-coupon-cell

@@ -94,7 +94,7 @@ export default {
        console.log(this.value)
      },
      search_shows(){
-         this.$router.push('/');
+         this.$router.back(-1);
      },
      keyboradWatch(){
          this.value == '' || this.value == null ?  this.show = true : this.show = false;

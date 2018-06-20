@@ -45,13 +45,6 @@
                   </div>
 
                 </van-pull-refresh>
-            <!-- tabBar -->
-      <van-tabbar v-model="tabarActive">
-        <van-tabbar-item  icon="wap-home">首页</van-tabbar-item>
-        <van-tabbar-item icon="pending-evaluate" dot>社区</van-tabbar-item>
-        <van-tabbar-item icon="shopping-cart" info="5" v-infos="shop_info">购物车</van-tabbar-item>
-        <van-tabbar-item icon="contact" info="2" v-infos="my_info">我的</van-tabbar-item>
-      </van-tabbar>
     </div>
   </div>
 </template>
@@ -59,6 +52,7 @@
 <script>
 import { mapState,mapActions,mapGetters } from 'vuex';
 import { Waterfall } from 'vant';
+import { Toast } from 'vant';
 
 export default {
   name: 'goodsInfo',
@@ -147,7 +141,7 @@ export default {
             
         }
       }, 500);
-    }
+    },
   },
   watch: {
 
@@ -155,14 +149,6 @@ export default {
   directives: {
     //瀑布流
     WaterfallLower: Waterfall('lower'),
-        //tabBar 消息通知指令
-    infos:{
-      inserted(el,obj) {
-         console.log(obj.value);
-         const info = el.childNodes[0].childNodes[1];
-         info.innerText = obj.value;
-      }
-    }
   },
   beforeCreate() {
      this.axios.get('./static/data.json').then((res)=>{
@@ -312,9 +298,9 @@ export default {
 
   },
   created() {
-     
+     Toast('刷新成功 ^_^')
      console.log(this.$route.params.id)
-     this.buyParam('buy');
+     
   }
 }
 </script>

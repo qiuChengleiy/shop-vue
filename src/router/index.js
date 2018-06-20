@@ -5,6 +5,7 @@ import Search from '@/components/search'
 import  GoodsInfo from '@/components/goodsInfo'
 import Buy from '@/components/buyInfo'
 import Pay from '@/components/orderPay'
+import Community from '@/components/community'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path:'/goods/:id/buy/pay',
       name:'pay',
       component:Pay,
+    },
+    {
+      path:'/community',
+      name:'community',
+      component:Community,
     },
     {
       path:'*',

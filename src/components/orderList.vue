@@ -20,8 +20,6 @@
   v-order = 'this'
 />
 
-
-
   </div>
 </template>
 
@@ -29,10 +27,6 @@
 import { mapState,mapActions,mapGetters } from 'vuex';
 import { ImagePreview } from 'vant';
 import { Toast } from 'vant';
-
-
-
-
 
 export default {
   name: 'buyInfo',
@@ -122,8 +116,6 @@ skuData: {
     stock_num: 111
   }
 },
-
-
 
 customStepperConfig: {
   // 自定义限购文案
@@ -235,9 +227,6 @@ disableStepperInput:false,
     })
 
   },
-  created() {
-    
-  }
 }
 </script>
 
