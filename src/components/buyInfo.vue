@@ -165,8 +165,10 @@ export default {
 
   },
   created() {
-     console.log(this.$route.params.id)
-     
+     console.log(this.buyImg)
+     if(this.buyImg == 'undefined') {
+       this.buyImg = 'https://a4.vimage1.com/upload/merchandise/pdc/544/548/464510208477548544/0/880555-001-5_218x274_70.jpg';
+     }
   }
 }
 </script>

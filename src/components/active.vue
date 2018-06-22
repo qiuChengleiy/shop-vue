@@ -14,9 +14,9 @@
             waterfall-offset="300"
             >
               <van-row v-for="(img,index) in imageList" :key='img.id' >
-                <img  v-lazy="img" name="adapter" />
+                <img  v-lazy="img" name="adapter" @click.stop="redirect('/goods/id_0')" />
                 <van-col span="16" offset="2" class="lazy-left">
-                  <h4>{{activeTitle[index]}}</h4>
+                  <h4 @click.stop="redirect('/goods/id_0')">{{activeTitle[index]}}</h4>
                 </van-col>
                 <van-col span="6" class="lazy-right">
                   <span>{{'剩余'+days[index]+'天'}}</span>
@@ -87,7 +87,11 @@ export default {
         }
         this.disabled = false;
        }, 200);
-    }
+    },
+    redirect(url){
+          console.log(url);
+           this.$router.push(url);
+      },
   },
   watch: {
 

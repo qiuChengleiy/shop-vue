@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="prograph">
       <!-- 社区消息组件 -->
                 <!-- 懒加载  瀑布流-->
             <lazy-component class="lazys"
@@ -8,7 +8,7 @@
             waterfall-offset="300"
             >
 
-              <van-row v-for="(img,index) in imageList" :key='img.id' >  
+              <van-row v-for="(img,index) in imageList" :key='img.id'>  
              <!-- 头部信息 -->
                 <van-row class="col-comm-1">
                         <van-col span='2'>
@@ -25,18 +25,29 @@
                             </van-col>
                             <!-- 弹出层 -->
                          <van-popup v-model="show" position="bottom" :overlay="true">
-                                sss
+                                <div class="empty">
+                                  <h4 @click="shareT('转发成功 ^_^')">{{shareTitle[0]}}</h4>
+                                  <h4 @click="shareT('已送达好友身边 ^_^')">{{shareTitle[1]}}</h4>
+                                  <h4 @click="shareT('已取消 ^_^')">{{shareTitle[2]}}</h4>
+                                </div>
                          </van-popup>
                 </van-row>
 
-                <img  v-lazy="img" name="adapter" />
-                <van-col span="16" offset="2" class="lazy-left">
-                  <h4>{{activeTitle[index]}}</h4>
+                <!-- 内容版块 -->
+                <van-col span="16" offset="1" class="lazy-lefts">
+                  <h4 @click="conTip('获取资源失败了 o(╥﹏╥)o')">{{activeTitle[index]}}</h4>
                 </van-col>
-                <van-col span="6" class="lazy-right">
-                  <span>{{'剩余'+days[index]+'天'}}</span>
+                <van-col span="6" class="lazy-rights">
+                  <span>{{'浏览'+watch[index]+'次'}}</span>
                 </van-col>
-               
+                <!-- 图片 -->
+                 <img  v-lazy="img" name="adapter" @click="conTip('获取资源失败了 o(╥﹏╥)o')"/>
+
+                <van-col span="24" class="lazy-leftp">
+                  <p @click="conTip('你是不是没流量了 o(╥﹏╥)o')">{{grefContent[index]}}</p>
+                </van-col>
+
+
               </van-row>
            </lazy-component>
   </div>
@@ -45,6 +56,7 @@
 <script>
 import { mapState,mapActions,mapGetters } from 'vuex';
 import { Waterfall } from 'vant';
+import { Toast } from 'vant';
 
 export default {
   name: 'active',
@@ -56,11 +68,12 @@ export default {
         path:'../../static/images/',
         imageList:[],
         activeTitle:null,
-        days:null,
+        watch:null,
         disabled:false,
         broadcast:null,
         author:[],
         show: false,
+        grefContent:null,
     }
   },
   props:{
@@ -78,7 +91,7 @@ export default {
     ...mapState({
       title: state => state.home.tab.title,
       icon: state => state.home.badge.icon,
-      bageTitle: state => state.home.badge.title,
+      shareTitle: state => state.community.share.title,
       actives: state => state.active.home.title,
       src : state => state.home.lunbo.src,
       activeTitle: state => state.active.home.activeTitle,
@@ -101,14 +114,21 @@ export default {
             this.imageList.push(this.imageList[i]);
             this.author.push(this.author[i]);
             this.activeTitle.push(this.activeTitle[i]);
-            this.days.push(this.days[i]); 
+            this.watch.push(this.watch[i]); 
+            this.grefContent.push(this.grefContent[i]);
         }
         this.disabled = false;
        }, 200);
     },
     pop() {
-        console.log('123')
         this.show = true;
+    },
+    shareT(message){
+      Toast(message);
+      this.show = false;
+    },
+    conTip(message){
+      Toast(message);
     }
   },
   watch: {
@@ -123,20 +143,25 @@ export default {
           if( res.status == 200 ) {
                 const data = res.data.home;
                 const dataComm = res.data.community;
-                this.days = data.active.days;
+                this.watch = dataComm.watch;
                 switch(this.tabs){
                     case '动态' :
                         this.activeTitle = data.active.tuijian_title;
                         this.imageList = data.imageList;
                         this.author = dataComm.author;
+                        this.grefContent = dataComm.grefContent;
                       break;
                     case '热门' :
                         this.activeTitle = data.active.shishang_title;
                         this.imageList = data.shishangImglist;
+                        this.author = dataComm.author;
+                        this.grefContent = dataComm.grefContent;
                       break;
                     case '发现' :
                         this.activeTitle = data.active.meizhuang_title;
                         this.imageList = data.meizhuangImglist;
+                        this.author = dataComm.author;
+                        this.grefContent = dataComm.grefContent;
                       break;
                     default:
                         break; 
@@ -154,7 +179,7 @@ export default {
 
   },
   created() {
-     
+     Toast('一起发现更大的世界 ^_^');
   }
 }
 </script>

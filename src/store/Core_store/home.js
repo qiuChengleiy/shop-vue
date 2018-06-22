@@ -16,8 +16,8 @@ export default {
         bc:true,
         show:true,
         sshow:false,
-        shop_info:"5",
-        my_info:"2",
+        shop_info:4,
+        my_info:2,
         buyInfo:{
             img:[],
         },
@@ -41,6 +41,10 @@ export default {
         addNum(state,e) {
             state.numO = e;
             console.log(e);
+        },
+        shopCartInfo(state) {
+            console.log(state.shop_info);
+            state.shop_info+=4;
         }
     },
     actions: {
@@ -57,6 +61,9 @@ export default {
        orderNum(context,e) {
          context.commit('addNum',e);
        },
+       infoAction(context) {
+            context.commit('shopCartInfo');
+       }
     },
     getters: {
         bc_notshow(state){

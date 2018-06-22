@@ -6,6 +6,8 @@ import  GoodsInfo from '@/components/goodsInfo'
 import Buy from '@/components/buyInfo'
 import Pay from '@/components/orderPay'
 import Community from '@/components/community'
+import ShopingCart from '@/components/shoppingCart'
+import Me from '@/components/me'
 
 Vue.use(Router)
 
@@ -40,6 +42,16 @@ export default new Router({
       path:'/community',
       name:'community',
       component:Community,
+    },
+    {
+      path:'/shoppingCart',
+      name:'shoppingCart',
+      component:ShopingCart,
+    },
+    {
+      path:'/me',
+      name:'Me',
+      component:Me,
     },
     {
       path:'*',

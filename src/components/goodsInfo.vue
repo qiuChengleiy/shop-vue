@@ -298,9 +298,7 @@ export default {
 
   },
   created() {
-     Toast('刷新成功 ^_^')
-     console.log(this.$route.params.id)
-     
+     Toast('加载完毕 ^_^')
   }
 }
 </script>

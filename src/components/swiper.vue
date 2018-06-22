@@ -44,7 +44,6 @@ export default {
   },
   methods: {
       redirect(url){
-          console.log(url);
            this.$router.push(url);
       }
   },

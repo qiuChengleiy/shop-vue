@@ -101,10 +101,10 @@
 
     <!-- tabBar -->
       <van-tabbar v-model="tabarActive">
-        <van-tabbar-item  icon="wap-home" @click="indexPage()">首页</van-tabbar-item>
-        <van-tabbar-item icon="pending-evaluate" dot @click="commPage()">社区</van-tabbar-item>
-        <van-tabbar-item icon="shopping-cart" info="5" v-infos="shop_info">购物车</van-tabbar-item>
-        <van-tabbar-item icon="contact" info="2" v-infos="my_info">我的</van-tabbar-item>
+        <van-tabbar-item  icon="wap-home" @click="redirects('/')">首页</van-tabbar-item>
+        <van-tabbar-item icon="pending-evaluate" dot @click="redirects('/community')">社区</van-tabbar-item>
+        <van-tabbar-item icon="shopping-cart" info="5" v-infos="shop_info" @click="redirects('/shoppingCart')">购物车</van-tabbar-item>
+        <van-tabbar-item icon="contact" info="2" v-infos="my_info" @click="redirects('/me')">我的</van-tabbar-item>
       </van-tabbar>
     </div>
 
@@ -181,11 +181,8 @@ export default {
         this.disabled = false;
        }, 200);
     },
-    indexPage() {
-      this.$router.push('/');
-    },
-     commPage(){
-      this.$router.push('/community');
+    redirects(url) {
+      this.$router.push(url);
     },
     tip() {
       Toast('网络错误o(╥﹏╥)o 请稍后再试~');

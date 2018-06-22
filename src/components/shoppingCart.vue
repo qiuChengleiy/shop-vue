@@ -1,5 +1,5 @@
 <template>
-   <!-- 社区组件 -->
+   <!-- 购物车组件 -->
   <div id="app">
      <!-- 搜索区 -->
      <van-row gutter="20" class="row-1">
@@ -21,53 +21,40 @@
         <van-icon name="qr" class="classfic"/>
       </van-col>
     </van-row>
+<van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="cartBox">
+    <div v-for="(v,index) in shops" :key="index.id" class="shop-cart">
+        <!-- 标签区域 -->
+        <van-row class="shop-col">
+            <van-col span="10" class="check" offset="1">
+                <van-checkbox v-model="checked[index]">{{shops[index]}} &nbsp;></van-checkbox>
+            </van-col>
+            <van-col span="4" offset="7">
+                <span class="edit"   @click="showList = true">领券  &nbsp;|&nbsp; 编辑  </span>
+            </van-col>
+        </van-row>
+        <div  @click="redirects('/goods/id_0/buy')">
+        <van-card
+            :title="goodsTitle[index].slice(0,16)"
+            :desc="goodsDescription[0]"
+            num="2"
+            :price="prices[index]"
+            :thumb="imageUrl[index]"    
+        />
+        </div>
+    </div>
+ </van-pull-refresh>   
+    <!-- 优惠券列表 -->
+    <van-popup v-model="showList" position="bottom">
+    <van-coupon-list
+        :coupons="coupons"
+        :chosen-coupon="chosenCoupon"
+        :disabled-coupons="disabledCoupons"
+        @change="onChange"
+        @exchange="onExchange"
+    />
+    </van-popup>
 
-    <!-- 标签区域 -->
-    <van-row>
-      <van-col span="24">
-        <van-tabs v-model="active" swipeable v-tab>
-          <van-tab v-for="index in 3" 
-          :title="title[index]" 
-          :key="index.id" 
-          class="tab"
-          >
-          <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-
-            <!-- 动态版块 -->
-            <div v-if="title[index]== '动态'" class="contain">
-        
-                  <van-row class="col-2">
-                    <!-- 通知 -->
-                 <van-col span="24" style="margin-top:20px;" v-show="bc_notshow">
-                    <van-notice-bar
-                        mode="link"
-                        left-icon="https://img.yzcdn.cn/public_files/2017/8/10/6af5b7168eed548100d9041f07b7c616.png"
-                     >
-                      {{broadcast[0]}}
-                    </van-notice-bar>
-                 </van-col>
-             </van-row>
-              <!-- 活动版块 -->
-                <news :tabs="title[index]" />
-            </div>
-
-            <!-- 时尚版块 -->
-            <div v-if="title[index]== '热门'" class="contain">
-              <news :tabs="title[index]" />
-            </div>
-
-            <!-- 美妆版块 -->
-            <div v-if="title[index]== '发现'" class="contain">
-              <news :tabs="title[index]" />
-            </div>
-
-          
-             </van-pull-refresh>   
-          </van-tab>
-        </van-tabs>
-      </van-col>
-    </van-row>
-
+    
     <!-- tabBar -->
       <van-tabbar v-model="tabarActive">
         <van-tabbar-item  icon="wap-home" @click="redirects('/')">首页</van-tabbar-item>
@@ -81,17 +68,28 @@
 
 <script>
 import { mapState,mapActions,mapGetters } from 'vuex';
-import { Waterfall } from 'vant';
-import News from './news';
+import { Toast } from 'vant';
+
+const coupon = {
+  available: 1,
+  discount: 0,
+  denominations: 10000,
+  origin_condition: 0,
+  reason: '',
+  value: 150,
+  name: '满498减100',
+  start_at: 1489104000,
+  end_at: 1514592000
+};
 
 export default {
-  name: 'community',
+  name: 'shoppingCart',
   components:{
-    News,
+  
   },
   data() {
     return {
-        tabarActive:1,
+        tabarActive:2,
         value:null,
         active:0,
         path:'../../static/images/',
@@ -101,8 +99,18 @@ export default {
         disabled:false,
         broadcast:null,
         show:true,
-         count: 0,
-        isLoading: false
+        count: 0,
+        isLoading: false,
+        checked: [false,false,false,false],
+        chosenCoupon: -1,
+        coupons: [coupon],
+        disabledCoupons: [coupon],
+        showList:null,
+        imageUrl:[],
+        goodsTitle:[],
+        goodsDescription:[],
+        prices:[],
+        shops:[],
     }
   },
   computed: {
@@ -123,7 +131,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'searchA'
+      'searchA','infoAction'
     ]),
     search() {
       this.$router.push('/search');
@@ -132,22 +140,29 @@ export default {
       setTimeout(() => {
         this.$toast('刷新成功');
         this.isLoading = false;
-        this.count++;
+        for (let i = 0; i < 3; i++) {
+            this.imageUrl.push(this.imageUrl[i]);
+            this.goodsTitle.push(this.goodsTitle[i]);
+            this.goodsDescription.push(this.goodsDescription[i]);
+            this.shops.push(this.shops[i]);
+            this.prices.push(this.prices[i]);
+        }
+
+        this.infoAction();
+        const infos = document.querySelector('.van-icon__info');
+        infos.innerText = this.shop_info;
+
       }, 500);
     },
-     // 瀑布流方法
-     loadMore() {
-      this.disabled = true;
-       setTimeout(() => {
-         for (let i = 0; i < 5; i++) {
-            this.imageList.push(this.imageList[i]);
-            this.activeTitle.push(this.activeTitle[i]);
-            this.days.push(this.days[i]); 
-        }
-        this.disabled = false;
-       }, 200);
+     //优惠券
+     onChange(index) {
+      this.showList = false;
+      this.chosenCoupon = index;
     },
-    redirects(url) {
+    onExchange(code) {
+      this.coupons.push(coupon);
+    },
+     redirects(url) {
       this.$router.push(url);
     },
   },
@@ -155,8 +170,6 @@ export default {
 
   },
   directives: {
-    //瀑布流
-    WaterfallLower: Waterfall('lower'),
     tab:{
       inserted(el) {
         //绑定tab样式
@@ -177,9 +190,19 @@ export default {
   beforeCreate() {
      this.axios.get('./static/data.json').then((res)=>{
           if( res.status == 200 ) {
-                const data = res.data.home;
-                this.broadcast = data.broadcast;
-              //  console.log(res.data.home.active,this.days,this.activeTitle)
+              const data = res.data.goods;
+              const preImg = data.id_0.imgList[0];
+              const title = data.id_0.title[0];
+              const price = data.id_0.limit_price[0];
+              const description = data.id_0.description; 
+              const shops = data.id_0.shops;
+
+              this.imageUrl = preImg;
+              this.goodsTitle = title;
+              this.prices = price;
+              this.goodsDescription = description;
+              this.shops = shops;              
+              
            } else {
              this.imageList = this.src;
              this.broadcast = "暂无消息~~QAQ~"
@@ -190,8 +213,8 @@ export default {
     })
 
   },
-  created() {
-     console.log( this.search_show)
+  created() {  
+      Toast('仅展示作用  ^_^')       
   }
 }
 </script>
