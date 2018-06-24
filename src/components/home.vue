@@ -4,7 +4,7 @@
      <!-- 搜索区 -->
      <van-row gutter="20" class="row-1">
       <van-col span="3" class="cols">
-        <a href="#">登录</a>
+        <a href="#" @click="redirects('/login')">登录</a>
       </van-col>
       <van-col span="19" class="cols">
         <form action="/">
@@ -18,7 +18,7 @@
         </form>
       </van-col>
       <van-col span="2" class="cols">
-        <van-icon name="qr" class="classfic"/>
+        <van-icon name="qr" class="classfic" @click="redirects('/about')"/>
       </van-col>
     </van-row>
 
@@ -228,8 +228,6 @@ export default {
 
   },
   created() {
-     Toast('加载完毕 ^_^')
-     console.log( this.search_show)
   }
 }
 </script>

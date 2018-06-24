@@ -4,7 +4,7 @@
      <!-- 搜索区 -->
      <van-row gutter="20" class="row-1">
       <van-col span="3" class="cols">
-        <a href="#">登录</a>
+        <a href="#" @click="redirects('/login')">登录</a>
       </van-col>
       <van-col span="19" class="cols">
         <form action="/">

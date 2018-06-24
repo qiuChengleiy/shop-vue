@@ -1,6 +1,6 @@
 
 export default {
-    state:{
+    state:{    
         tab:{
             title:['','今日推荐','时尚','美妆','家电','家居','国际','生活'],
         },

@@ -18,7 +18,7 @@
         </form>
       </van-col>
       <van-col span="2" class="cols">
-        <van-icon name="qr" class="classfic"/>
+        <van-icon name="qr" class="classfic" @click="redirects('/about')"/>
       </van-col>
     </van-row>
 
@@ -114,7 +114,10 @@ export default {
         }
         this.disabled = false;
        }, 200);
-    }
+    },
+     redirects(url) {
+      this.$router.push(url);
+    },
   },
   watch: {
 

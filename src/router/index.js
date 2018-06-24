@@ -8,6 +8,8 @@ import Pay from '@/components/orderPay'
 import Community from '@/components/community'
 import ShopingCart from '@/components/shoppingCart'
 import Me from '@/components/me'
+import Login from '@/components/login'
+import About from '@/components/about'
 
 Vue.use(Router)
 
@@ -52,6 +54,21 @@ export default new Router({
       path:'/me',
       name:'Me',
       component:Me,
+    },
+    {
+      path:'/login',
+      name:'login',
+      component:Login,
+    },
+    {
+      path:'/register',
+      name:'register',
+      component:Login,
+    },
+    {
+      path:'/about',
+      name:'aboutMe',
+      component:About,
     },
     {
       path:'*',
